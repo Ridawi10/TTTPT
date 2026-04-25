@@ -1,0 +1,15 @@
+# Redirect www to non-www (301 redirect)
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Route all requests to the public/ directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*) public/$1 [L]
+</IfModule>
+
+<IfModule LiteSpeed>
+    RewriteRule .* - [E=noabort:1, E=noconntimeout:1]
+</IfModule>
